@@ -9181,7 +9181,7 @@ static inline int bmp_alloc(uint64_t *bmp, int count){
 		unsigned long pos;
 		_BitScanForward64(&pos, ~*bmp);
 	#else
-	#	error Don't know how to implement bmp_alloc
+	#	error Do not know how to implement bmp_alloc
 	#endif
 
 		*bmp |= UINT64_C(1) << pos;
@@ -11242,7 +11242,7 @@ static sink_val unop_int_clz(context ctx, sink_val a){
 		_BitScanReverse(&pos, i);
 		return sink_num(31 - pos);
 	#else
-	#	error Don't know how to implement bmp_alloc
+	#	error Do not know how to implement bmp_alloc
 	#endif
 }
 
