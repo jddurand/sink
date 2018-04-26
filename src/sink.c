@@ -22,6 +22,14 @@
 #	define BITSCAN_WIN
 #endif
 
+/* Cross compiler wrapper around LLVM's __has_builtin */
+/* C.f. http://eigen.tuxfamily.org/bz/show_bug.cgi?id=871 */
+#ifdef __has_builtin
+#  define SINK_HAS_BUILTIN(x) __has_builtin(x)
+#else
+#  define SINK_HAS_BUILTIN(x) 0
+#endif
+
 // internal representation of a string
 typedef struct {
 	uint8_t *bytes;
@@ -11227,7 +11235,7 @@ static sink_val unop_int_not(context ctx, sink_val a){
 }
 
 static sink_val unop_int_clz(context ctx, sink_val a){
-	#if defined(__has_builtin) && __has_builtin(__builtin_clz)
+	#if SINK_HAS_BUILTIN(__builtin_clz)
 		int32_t i = toint(a);
 		if (i == 0)
 			return sink_num(32);
